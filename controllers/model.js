@@ -1,7 +1,6 @@
 import * as modelUtils from '../utils/models'
 
 exports.sample = (req, res, next) => {
-  console.log(req.body)
   const numSamples = req.body.numSamples
   const temperature = req.body.temperature
 
@@ -11,7 +10,7 @@ exports.sample = (req, res, next) => {
       console.log(result)
       res.status(201).json({
         samples: result,
-        message: numSamples.toString() + ' sampled'
+        message: `Total ${numSamples} sampled`
       })
     })
     .catch(err => {
