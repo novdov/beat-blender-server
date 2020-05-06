@@ -4,11 +4,6 @@ const globalAny = global
 globalAny.performance = Date
 globalAny.fetch = require('node-fetch')
 
-const modelInitInfo = {
-  isSamplerInitialized: false,
-  isInterpolatorInitialized: false
-}
-
 const musicVAESampler = new model.MusicVAE(
   'https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/drums_2bar_lokl_small'
 )
@@ -25,13 +20,12 @@ const musicVAEInterpolator = new model.MusicVAE(
  * @returns An array of sampled `NoteSequence` objects.
  */
 const sample = (numSamples, temperature = 0.9) => {
-  if (!modelInitInfo.isSamplerInitialized) {
+  if (!musicVAESampler.isInitialized()) {
     musicVAESampler
       .initialize()
       .then(() => {
         console.log('MusicVAE sampler is now initialized')
       })
-    modelInitInfo.isSamplerInitialized = true
   }
   return musicVAESampler
     .sample(numSamples, temperature)
@@ -51,13 +45,12 @@ const sample = (numSamples, temperature = 0.9) => {
  * @returns An array of sampled `NoteSequence` objects.
  */
 const interpolate = ([inputSequences], numOutput) => {
-  if (!modelInitInfo.isInterpolatorInitialized) {
+  if (!musicVAEInterpolator.isInitialized()) {
     musicVAEInterpolator
       .initialize()
       .then(() => {
         console.log('MusicVAE interpolator is now initialized')
       })
-    modelInitInfo.isInterpolatorInitialized = true
   }
   return musicVAEInterpolator
     .initialize()
