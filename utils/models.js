@@ -4,12 +4,17 @@ const globalAny = global
 globalAny.performance = Date
 globalAny.fetch = require('node-fetch')
 
+const modelInitInfo = {
+  isSamplerInitialized: false,
+  isInterpolatorInitialized: false
+}
+
 const musicVAESampler = new model.MusicVAE(
   'https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/drums_2bar_lokl_small'
 )
-// const musicVAE = new model.MusicVAE(
-//   'https://storage.googleapis.com/download.magenta.tensorflow.org/models/music_vae/dljs/drums_hikl_q16'
-// )
+const musicVAEInterpolator = new model.MusicVAE(
+  'https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/drums_2bar_hikl_small'
+)
 
 /**
  * Sample sequence from the model prior.
@@ -20,9 +25,16 @@ const musicVAESampler = new model.MusicVAE(
  * @returns An array of sampled `NoteSequence` objects.
  */
 const sample = (numSamples, temperature = 0.9) => {
+  if (!modelInitInfo.isSamplerInitialized) {
+    musicVAESampler
+      .initialize()
+      .then(() => {
+        console.log('MusicVAE sampler is now initialized')
+      })
+    modelInitInfo.isSamplerInitialized = true
+  }
   return musicVAESampler
-    .initialize()
-    .then(() => musicVAESampler.sample(numSamples, temperature))
+    .sample(numSamples, temperature)
     .then(samples => {
       return samples
     })
@@ -39,7 +51,17 @@ const sample = (numSamples, temperature = 0.9) => {
  * @returns An array of sampled `NoteSequence` objects.
  */
 const interpolate = ([inputSequences], numOutput) => {
-  return musicVAE.initialize().interpolate(inputSequences, numOutput)
+  if (!modelInitInfo.isInterpolatorInitialized) {
+    musicVAEInterpolator
+      .initialize()
+      .then(() => {
+        console.log('MusicVAE interpolator is now initialized')
+      })
+    modelInitInfo.isInterpolatorInitialized = true
+  }
+  return musicVAEInterpolator
+    .initialize()
+    .interpolate(inputSequences, numOutput)
 }
 
 module.exports = {
