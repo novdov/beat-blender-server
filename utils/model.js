@@ -10,6 +10,18 @@ globalAny.fetch = require('node-fetch')
 const musicVAESampler = new model.MusicVAE(modelConfig.samplerCheckpointUrl)
 const musicVAEInterpolator = new model.MusicVAE(modelConfig.interpolatorCheckpointUrl)
 
+const initializeModel = (model, name) => {
+  model
+    .initialize()
+    .then(() => {
+      const modelName = name || model.name
+      console.log(`[musicVAE:${modelName}] initialized`)
+    })
+}
+
+initializeModel(musicVAESampler, 'sampler')
+initializeModel(musicVAEInterpolator, 'interpolator')
+
 /**
  * Sample sequence from the model prior.
  * Reference: https://github.com/magenta/magenta-js/blob/master/music/src/music_vae/model.ts#L1120

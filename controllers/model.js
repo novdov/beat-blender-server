@@ -1,4 +1,4 @@
-import * as modelUtils from '../utils/models'
+import * as modelUtils from '../utils/model'
 
 exports.sample = (req, res, next) => {
   const numSamples = req.body.numSamples
