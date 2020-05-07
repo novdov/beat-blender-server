@@ -1,16 +1,14 @@
 const model = require('@magenta/music/node/music_vae')
 const mmCore = require('@magenta/music/node/core')
 
+const modelConfig = require('../config/model')
+
 const globalAny = global
 globalAny.performance = Date
 globalAny.fetch = require('node-fetch')
 
-const musicVAESampler = new model.MusicVAE(
-  'https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/drums_2bar_lokl_small'
-)
-const musicVAEInterpolator = new model.MusicVAE(
-  'https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/drums_2bar_hikl_small'
-)
+const musicVAESampler = new model.MusicVAE(modelConfig.samplerCheckpointUrl)
+const musicVAEInterpolator = new model.MusicVAE(modelConfig.interpolatorCheckpointUrl)
 
 /**
  * Sample sequence from the model prior.

@@ -1,0 +1,4 @@
+{
+  "samplerCheckpointUrl": "https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/drums_2bar_lokl_small",
+  "interpolatorCheckpointUrl": "https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/drums_2bar_hikl_small"
+}
