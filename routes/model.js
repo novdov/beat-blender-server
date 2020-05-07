@@ -9,4 +9,9 @@ router.post(
   modelController.sample
 )
 
+router.post(
+  '/interpolate',
+  modelController.interpolate
+)
+
 module.exports = router
