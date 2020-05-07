@@ -1,4 +1,5 @@
 const model = require('@magenta/music/node/music_vae')
+const mmCore = require('@magenta/music/node/core')
 
 const globalAny = global
 globalAny.performance = Date
@@ -44,7 +45,7 @@ const sample = (numSamples, temperature = 0.9) => {
  * return, including the reconstructions.
  * @returns An array of sampled `NoteSequence` objects.
  */
-const interpolate = ([inputSequences], numOutput) => {
+const interpolate = (inputSequences, numOutput) => {
   if (!musicVAEInterpolator.isInitialized()) {
     musicVAEInterpolator
       .initialize()
@@ -52,9 +53,18 @@ const interpolate = ([inputSequences], numOutput) => {
         console.log('MusicVAE interpolator is now initialized')
       })
   }
+
+  inputSequences.forEach((ns, seqIndex) => {
+    inputSequences[seqIndex] = mmCore.sequences.quantizeNoteSequence(
+      ns, mmCore.constants.DEFAULT_STEPS_PER_QUARTER
+    )
+  })
+
   return musicVAEInterpolator
-    .initialize()
     .interpolate(inputSequences, numOutput)
+    .then(output => {
+      return output
+    })
 }
 
 module.exports = {
