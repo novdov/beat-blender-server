@@ -24,7 +24,8 @@
     "@magenta/music": "^1.14.0",
     "@tensorflow/tfjs-node": "^1.7.4",
     "express": "^4.17.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "static-eval": ">=2.0.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
