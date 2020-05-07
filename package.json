@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon --exec babel-node app.js"
+    "start-dev": "npx nodemon --exec babel-node app.js",
+    "start": "npx --exec babel-node app.js"
   },
   "repository": {
     "type": "git",
