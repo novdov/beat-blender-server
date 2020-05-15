@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "npx nodemon --exec babel-node app.js",
-    "start": "npx --exec babel-node app.js"
+    "clean": "rm -rf ./.build && mkdir ./.build",
+    "build-babel": "npx babel . -d ./.build --ignore \"node_modules/**/*.js\"",
+    "build": "npm run clean && npm run build-babel && cp model_config.json ./.build/",
+    "start": "npm run build && node ./.build/app.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +22,6 @@
   },
   "homepage": "https://github.com/novdov/note-blender-server#readme",
   "dependencies": {
-    "@babel/core": "^7.9.6",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.6",
     "@magenta/music": "^1.14.0",
@@ -29,6 +31,8 @@
     "static-eval": ">=2.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
