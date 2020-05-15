@@ -5,13 +5,13 @@
     "node": "14.0.0"
   },
   "description": "Server for note-blender-app",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "npx nodemon --exec babel-node app.js",
+    "start-dev": "npx nodemon --exec babel-node src/app.js",
     "clean": "rm -rf ./.build && mkdir ./.build",
-    "build-babel": "npx babel . -d ./.build --ignore \"node_modules/**/*.js\"",
-    "build": "npm run clean && npm run build-babel && cp model_config.json ./.build/",
+    "build-babel": "npx babel src/ -d ./.build --ignore \"node_modules/**/*.js\"",
+    "build": "npm run clean && npm run build-babel && cp src/model_config.json ./.build/",
     "start": "npm run build && node ./.build/app.js"
   },
   "repository": {
