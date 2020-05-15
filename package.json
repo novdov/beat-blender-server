@@ -1,6 +1,9 @@
 {
   "name": "note-blender-server",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.0.0"
+  },
   "description": "Server for note-blender-app",
   "main": "app.js",
   "scripts": {
